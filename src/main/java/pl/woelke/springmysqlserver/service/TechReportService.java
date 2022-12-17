@@ -23,4 +23,36 @@ public class TechReportService {
         LOGGER.info("getAllTechRepository(...)");
         return technicalReports;
     }
+
+    public TechnicalReport createReport(TechnicalReport report) {
+        LOGGER.info("createReport()");
+        TechnicalReport savedReport = techReportRepository.save(report);
+        LOGGER.info("createReport(...)");
+        return savedReport;
+    }
+
+    public TechnicalReport readReport(Long id) {
+        LOGGER.info("readReport()");
+        TechnicalReport technicalReport = techReportRepository.findById(id).orElseThrow();
+        LOGGER.info("readReport(...)");
+        return technicalReport;
+    }
+
+    public TechnicalReport updateReport(TechnicalReport report) {
+        LOGGER.info("updateReport()");
+        TechnicalReport editedReport = techReportRepository.findById(report.getId()).orElseThrow();
+        editedReport.setName(report.getName());
+        editedReport.setFailure(report.getFailure());
+        editedReport.setCreated(report.getCreated());
+        TechnicalReport updatedReport = techReportRepository.save(editedReport);
+        LOGGER.info("updateReport(...)");
+        return updatedReport;
+    }
+
+    public String deleteReport(Long id) {
+        LOGGER.info("deleteReport()");
+        techReportRepository.deleteById(id);
+        LOGGER.info("deleteReport(...)");
+        return "Record " + id + " deleted";
+    }
 }
